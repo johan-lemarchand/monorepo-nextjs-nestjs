@@ -14,5 +14,6 @@
       "cache": false,
       "persistent": true
     }
-  }
+  },
+  "globalEnv": ["VERCEL_ENV", "VERCEL_URL", "NODE_ENV", "NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY", "NEXT_PUBLIC_SITE_KEY_RECAPTCHA"]
 }

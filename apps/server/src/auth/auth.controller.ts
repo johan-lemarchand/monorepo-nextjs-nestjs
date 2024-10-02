@@ -1,4 +1,12 @@
-import { Controller, Post, UseGuards, Req, Get, Body } from '@nestjs/common';
+import {
+  Controller,
+  Post,
+  UseGuards,
+  Req,
+  Get,
+  Body,
+  UnauthorizedException,
+} from '@nestjs/common';
 import { AuthGuard } from '@nestjs/passport';
 import { AuthService } from './auth.service';
 import { Request } from 'express';
@@ -24,13 +32,42 @@ export class AuthController {
   }
 
   @Post('magic-link')
-  async sendMagicLink(@Body('email') email: string) {
-    return this.authService.sendMagicLink(email);
+  async sendMagicLink(
+    @Body('email') email: string,
+    @Body('siteInfo') siteInfo: {
+      title: string;
+      email: { from: string; contact: string };
+      maker: string;
+      appIcon: string;
+      prodUrl: string;
+      company: { name: string; address: string };
+    },
+  ) {
+    return this.authService.sendMagicLink(email, siteInfo);
   }
 
   @Get('magic-link/callback')
-  @UseGuards(AuthGuard('magic-link'))
-  magicLinkCallback(@Req() req: Request) {
-    return this.authService.login(req.user);
+  async magicLinkCallback(@Body('token') token: string) {
+    const user = await this.authService.validateMagicLink(token);
+    if (user) {
+      return this.authService.login(user);
+    }
+    throw new UnauthorizedException('Lien magique invalide');
+  }
+
+  @Post('signout')
+  async signout(@Req() req: Request) {
+    return this.authService.signout(req);
+  }
+
+  @Get('status')
+  @UseGuards(AuthGuard('jwt'))
+  async checkAuthStatus(@Req() req: Request) {
+    return { isAuthenticated: true, user: req.user };
+  }
+
+  @Get('providers')
+  async getProviders() {
+    return this.authService.getAvailableProviders();
   }
 }

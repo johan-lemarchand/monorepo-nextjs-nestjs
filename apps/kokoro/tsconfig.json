@@ -7,13 +7,15 @@
       }
     ],
     "paths": {
-      "~/*": ["./*"]
+      "~/*": ["./*"],
+      "@/*": ["./src/*"],
+      "framer-motion": ["../../packages/ui/node_modules/framer-motion"]
     }
   },
   "include": [
     "next-env.d.ts",
-    "next.config.mjs",
-    "postcss.config.mjs",
+    "next.config.js",
+    "postcss.config.js",
     "**/*.ts",
     "**/*.tsx",
     ".next/types/**/*.ts"

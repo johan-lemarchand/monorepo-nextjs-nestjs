@@ -2,14 +2,14 @@
 
 // From : https://shadcn-extension.vercel.app/docs/multi-select
 
-import { Badge } from "@/components/ui/badge";
+import { Badge } from "@repo/ui/components/ui/badge";
 import {
   Command,
   CommandEmpty,
   CommandItem,
   CommandList,
-} from "@/components/ui/command";
-import { cn } from "@/lib/utils";
+} from "@repo/ui/components/ui/command";
+import { cn } from "@repo/ui/lib/utils";
 import { Command as CommandPrimitive } from "cmdk";
 import { Check, X as RemoveIcon } from "lucide-react";
 import React, {

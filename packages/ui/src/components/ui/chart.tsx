@@ -1,8 +1,6 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
-
 "use client";
 
-import { cn } from "@/lib/utils";
+import { cn } from "@repo/ui/lib/utils";
 import * as React from "react";
 import * as RechartsPrimitive from "recharts";
 
@@ -140,6 +138,7 @@ const ChartTooltipContent = React.forwardRef<
       }
 
       const [item] = payload;
+      // @ts-ignore
       const key = `${labelKey || item.dataKey || item.name || "value"}`;
       const itemConfig = getPayloadConfigFromPayload(config, item, key);
       const value =
